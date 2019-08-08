@@ -45,6 +45,6 @@ public class CustomJcoController {
         if ( functionName==null ){
             return new R( R.FAIL,"param未包含functionName参数" );
         }
-        return customJcoService.execute( functionName, paramMap );
+        return customJcoService.callRFC( functionName, paramMap );
     }
 }

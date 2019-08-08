@@ -28,7 +28,7 @@ public class CustomJcoServiceImpl implements CustomJcoService {
     @Autowired
     private JcoProperties jcoProperties;
 
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
     //构造方法之后执行
     @PostConstruct
@@ -76,7 +76,7 @@ public class CustomJcoServiceImpl implements CustomJcoService {
         try {
             dest = JCoDestinationManager.getDestination(destName);
             dest.ping();
-            return new R<>(R.SUCCESS, "success");
+            return new R<>(R.SUCCESS, "success", dest.getAttributes());
         } catch (JCoException e) {
             return new R<>(R.FAIL, ExceptionUtils.getStackTrace(e));
         }
@@ -90,7 +90,7 @@ public class CustomJcoServiceImpl implements CustomJcoService {
      * @return
      */
     @Override
-    public R execute(String functionName, Map<String, Object> paramMap) {
+    public R callRFC(String functionName, Map<String, Object> paramMap) {
         Map resultMap = new HashMap();
         try {
             JCoDestination conn = JCoDestinationManager.getDestination(jcoProperties.getDestName());
@@ -102,13 +102,13 @@ public class CustomJcoServiceImpl implements CustomJcoService {
             JCoParameterList input = fun.getImportParameterList();
             if (paramMap != null) {
                 for (Iterator<Map.Entry<String, Object>> it = paramMap.entrySet().iterator(); it.hasNext(); ) {
-                    Map.Entry<String, Object> pairs = it.next();
-                    if (pairs.getValue() instanceof List) {
-                        setTableParamList(fun, pairs);
-                    } else if (pairs.getValue() instanceof Map) {
-                        setImportParameterList(fun, pairs);
+                    Map.Entry<String, Object> param = it.next();
+                    if (param.getValue() instanceof List) {
+                        setTableParamList(fun, param);
+                    } else if (param.getValue() instanceof Map) {
+                        setImportParameterList(fun, param);
                     } else {
-                        input.setValue("" + pairs.getKey(), pairs.getValue());
+                        input.setValue("" + param.getKey(), param.getValue());
                     }
                 }
             }
@@ -139,7 +139,7 @@ public class CustomJcoServiceImpl implements CustomJcoService {
 
     //设置表格传入参数
     private void setTableParamList(JCoFunction fun, Map.Entry<String, Object> pairs) throws CustomJcoException {
-        JCoTable tb = fun.getTableParameterList().getTable("" + pairs.getKey());
+        JCoTable tb = fun.getImportParameterList().getTable("" + pairs.getKey());
         List ls = (List) pairs.getValue();
 
         for (int i = 0; i < ls.size(); i++) {

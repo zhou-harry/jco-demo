@@ -164,7 +164,7 @@ public class StepByStepServer {
                 return true;
 
             return false;
-            // "true" means that JCo will now execute the transaction, "false" means
+            // "true" means that JCo will now callRFC the transaction, "false" means
             // that we have already executed this transaction previously, so JCo will
             // skip the handleRequest() step and will immediately return an OK code to R/3.
         }
@@ -200,7 +200,7 @@ public class StepByStepServer {
         public void execute(JCoServerContext serverCtx) {
             String tid = serverCtx.getTID();
             if (tid != null) {
-                System.out.println("TID Handler: execute for " + tid);
+                System.out.println("TID Handler: callRFC for " + tid);
                 availableTIDs.put(tid, TIDState.EXECUTED);
             }
         }

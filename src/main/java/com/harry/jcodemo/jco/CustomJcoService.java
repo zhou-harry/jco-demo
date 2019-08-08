@@ -14,6 +14,6 @@ public interface CustomJcoService {
     //测试连接是否连通
     R pingCalls( String destName );
 
-    R execute( String functionName, Map<String, Object> paramMap );
+    R callRFC(String functionName, Map<String, Object> paramMap );
 
 }

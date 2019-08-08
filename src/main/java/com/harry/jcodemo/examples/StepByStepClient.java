@@ -78,7 +78,7 @@ public class StepByStepClient {
         function.getImportParameterList().setValue("REQUTEXT", "Hello SAP");
 
         try {
-            //execute, i.e. send the function to the ABAP system addressed 
+            //callRFC, i.e. send the function to the ABAP system addressed
             //by the specified destination, which then returns the function result.
             //All necessary conversions between Java and ABAP data types
             //are done automatically.

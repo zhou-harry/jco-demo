@@ -25,26 +25,26 @@ import com.sap.conn.jco.ext.SessionReferenceProvider;
  * <p>
  * Before discussing situations requiring SessionReferenceProvider, we provide a short
  * description of how the JCo Runtime handles the stateful and stateless calls by default.
- * By default all RFC calls (JCoFunction.execute(JCoDestination)) are stateless. That means
+ * By default all RFC calls (JCoFunction.callRFC(JCoDestination)) are stateless. That means
  * the ABAP context associated with the connection will be destroyed. Some RFC modules save
  * a particular state/data in the ABAP context's area. In order to keep a JCo connection
  * and use it for subsequent (stateful) calls, the JCoConext.begin(JCoDestination) API can be used.
  * In the case of multithreaded applications some calls to a destination can be executed concurrently, so
  * JCo Runtime needs to associate a particular call or connection to an internal session. By default
- * JCo Runtime associates each thread with a sessionof its own, so that most applications that execute
+ * JCo Runtime associates each thread with a sessionof its own, so that most applications that callRFC
  * all stateful requests en bloc or at least in the same thread will run correctly.
  * <p>
- * Applications that wish to execute calls belonging to a stateful sequence by employing different
+ * Applications that wish to callRFC calls belonging to a stateful sequence by employing different
  * threads have to implement and register the SessionReferenceProvider. The main goal of
  * the implementation is to determine to which session the calls executing in the current thread belong.
  * <p>
  * This example defines MultiStepJob having several execution steps. The test starts a
- * certain number of threads (see runJobs). Each thread is designed to take a job, execute one step, and put the
+ * certain number of threads (see runJobs). Each thread is designed to take a job, callRFC one step, and put the
  * job back to the shared job list. There are two jobs as an example: StatelessMultiStepExample and
  * StatefulMultiStepExample. Both invoke the same RFC modules, but StatefulMultiStepExample
  * uses JCoContext.begin and JCoContext.end to specify the stateful calls.
  * <p>
- * To be able to execute a stateful call sequence distributed over several steps, we register
+ * To be able to callRFC a stateful call sequence distributed over several steps, we register
  * a custom implementation of SessionReferenceProvider called MySessionReferenceProvider.
  * The idea behind MySessionReferenceProvider is simple: each thread
  * holds the current session reference in its local storage. To achieve that WorkerThread.run
