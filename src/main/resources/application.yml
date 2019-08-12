@@ -7,7 +7,7 @@ sap:
       client: 140
       sysnr: 06
       lang: zh
-      user: ILAS
-      passwd: Tplhk12345
+      user: "****"
+      passwd: "****"
       pool_capacity: 10
       peak_limit: 50

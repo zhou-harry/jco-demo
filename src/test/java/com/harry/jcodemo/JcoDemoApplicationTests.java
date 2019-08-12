@@ -60,7 +60,7 @@ public class JcoDemoApplicationTests {
         list.add(ZSCONTENT);
         input.put("IT_CONTENT",list);
 
-        R rfc = jcoService.callRFC("Z_IF_FAS_TRANSACTION", input);
+        R rfc = jcoService.callRFC("Z_TEST", input);
 
         logger.info(rfc.toString());
     }
