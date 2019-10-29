@@ -45,11 +45,11 @@ public class CustomDestinationDataProvider {
     static Properties getDestinationPropertiesFromUI() {
         //adapt parameters in order to configure a valid destination
         Properties connectProperties = new Properties();
-        connectProperties.setProperty(DestinationDataProvider.JCO_ASHOST, "10.1.118.73");
+        connectProperties.setProperty(DestinationDataProvider.JCO_ASHOST, "192.168.1.1");
         connectProperties.setProperty(DestinationDataProvider.JCO_SYSNR, "06");
-        connectProperties.setProperty(DestinationDataProvider.JCO_CLIENT, "140");
-        connectProperties.setProperty(DestinationDataProvider.JCO_USER, "ILAS");
-        connectProperties.setProperty(DestinationDataProvider.JCO_PASSWD, "Tplhk12345");
+        connectProperties.setProperty(DestinationDataProvider.JCO_CLIENT, "206");
+        connectProperties.setProperty(DestinationDataProvider.JCO_USER, "USER");
+        connectProperties.setProperty(DestinationDataProvider.JCO_PASSWD, "PASSWD");
         connectProperties.setProperty(DestinationDataProvider.JCO_LANG, "zh");
         return connectProperties;
     }
